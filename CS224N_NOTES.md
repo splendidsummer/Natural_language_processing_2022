@@ -1,8 +1,13 @@
 # CS224N & UPC Course 
-# UPC Course 2 NERC
-## Modern Technology (from paper with code)
+## Paper of the year 
+1. [A Survey of Transformers](https://arxiv.org/pdf/2106.04554.pdf)  
+2. [Effcient Transformers: A Survey]()
 
+## NLP Task Review
+![nlp_tasks](images/nlp_tasks.png)
 
+# UPC Course 
+## Lecture 2 NERC
 
 # Lecture 7 Seq2Seq & Neural Machine Translation
 
@@ -102,19 +107,55 @@ Barriers and solutions for Self-Attention as a building block.
 2. **Problem**: Since self attention doesn’t build in order information, we need to encode the order of the
 sentence in our keys, queries, and values. **Solutions**: Sinusoidal position representations - concatenate sinusoidal functions of varying periods. 
 ![postional_encoding](images/positional_encoding.png)
+Remark: We can try Position representation vectors learned from scratch, see more in lecture9 slides. 
 
+#### Transformers Milestone
+State-of-the-art in most NLP tasks are achieved by Transformer and Attention-based models. 
+1. 2017: Transformer was introduced by Google 
+2. 2018: **Bidirectional Encoder Representations from Transformers (BERT)** by Google 
+3. 2019: Several BERT-inspired models such as **RoBERTa** and **BART** by Facebook, **XLNet** by Google and CMU, and  many more.
+4. Adding more models for efficient Transformer. -- Model reduction strategies such as distillation (DistilBERT, DistilRoBERTa, ...) and pruning; Other simplied BERT-like models such as A Lite BERT (ALBERT), MobileBERT. 
+5. 2020: Generative Pre-trained Transformer 3 (GPT-3) by OpenAI, achieves state-of-the-art in language generation. Still in active research.
+6. 2022: Highly optimized huge language models: **DeepSpeed** by Facebook, **PaLM** by Google. 
 
 
 #### Transformers Architecture 
 
+##### Encoder 
 ![Multi-head Self-Attention](images/transformers.png) 
-1. Multi-head Self-Attention 
+1. Multi-head Self-Attention
+   Multi-heads not single heads: 
    $$A_h = Softmax(\alpha Q_h K_h^T) V_h$$
-
+   Remark: why multi-heads 
+   ![why_multi_head](images/why_multi_head.png) 
+  
 2. 
 
 
-##    # Code Implementation 
+##### Decoder 
+
+We us **Masked Multi Head Self Attention** to keep the decoder from cheating. (Masking the future in self attention). To enable parallelization, we mask out attention to future words by setting attention scores to $-\infty$. 
+
+
+#### Drawbacks of transformers
+
+* Quadratic compute in self attention (today): Computing all pairs of interactions means our computation grows quadratically with the sequence length!
+
+* Position representations: Are simple absolute indices the best we can do to represent position? : 1. Improvement1: [Relative linear position attention](https://arxiv.org/abs/1803.02155); 2.Improvement2: [Dependency syntax based position.](https://arxiv.org/pdf/1909.00383.pdf)\
+
+#### Improvement of Transformers 
+1. Can we build models like Transformers without paying the $𝑂(𝑇^2)$ all pairs self attention cost?: [**Linformer**]() 
+
+
+## QA(Question Answering) 
+* **Input**: Several sequences 
+* **Output**: sequencde
+![QA](images/question_answering.png)
+
+
+
+
+##  Code Implementation 
 
 
 ### ELMO 
@@ -145,6 +186,22 @@ sentence in our keys, queries, and values. **Solutions**: Sinusoidal position re
 
 
 #### ELMO Implementation 
+##### Char CNN
+1. Preprocessing 
+2. Convolutions
+3. Highway Layer
+    A [Highway layer](https://arxiv.org/abs/1505.00387) does a gated combination of a linear transformation and a non-linear transformation of its input.  :math: $y = g * x + (1 - g) *
+    f(A(x))$, where :math:`A` is a linear transformation, :math: $f$ is an element-wise non-linearity, and :math:$g$ is an element-wise gate, computed as :math:$sigmoid(B(x))$.
+    This module will apply a fixed number of highway layers to its input, returning the final result.  
+
+4. The first 
+
+
+
+
+5. Projection  
+
+##### BiLSTM
 
 ##### NN Configuration 
 
@@ -210,6 +267,30 @@ print(res['elmo_representations'][1].shape)  # [3, 9, 1024]
 #### ELMO
 
 
+
+### Appendix 
+#### Three ways to build torch model
+* **torch.nn.ModuleList()** 
+  ```
+  self._layers = torch.nn.ModuleList(
+            [torch.nn.Linear(input_dim, input_dim * 2) for _ in range(num_layers)]
+        )
+  ```
+
+* **torch.nn.Sequential**
+  ```
+  import torch.nn as nn
+
+  # Example of using Sequential
+  model = nn.Sequential(  # OrderedDict
+          nn.Conv2d(1,20,5),
+          nn.ReLU(),
+          nn.Conv2d(20,64,5),
+          nn.ReLU())
+ 
+  ```
+  
+* **torch.**
 
 
 
