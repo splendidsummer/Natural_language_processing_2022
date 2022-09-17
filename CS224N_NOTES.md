@@ -146,11 +146,84 @@ We us **Masked Multi Head Self Attention** to keep the decoder from cheating. (M
 #### Improvement of Transformers 
 1. Can we build models like Transformers without paying the $𝑂(𝑇^2)$ all pairs self attention cost?: [**Linformer**]() 
 
+## Pretrained Model (with hugging-face implementation)
+
+### Bert 
+
+Only **Encoder** architecture of Transformers. 
+
+#### Subword Tokenizer 
+
+#### Build
+
+
 
 ## QA(Question Answering) 
 * **Input**: Several sequences 
 * **Output**: sequencde
 ![QA](images/question_answering.png)
+
+## Dialogue
+Dialogue tasks: **Chatting**; **Task-oriented**. 
+**Task-oriented** ： 
+
+Dialogue $\rightarrow$ Preprocessing by NLU (Natural Language Understanding) State Tracker $\rightarrow$  State  $\rightarrow$ Policy $\rightarrow$  Action $\rightarrow$ NLG  
+
+
+## NLU (Natural Language Understanding) 
+NLU Task: 
+* Intent Classification 
+* Slot Filling 
+
+## NLG (Natural Language Generation)  
+
+![task-oriented](images/task-oriented.png)
+
+## Knowledge Graph 
+This task can be oversimplified in the following way: 
+* Extract Entity 
+* Extract Relation (Acually a classification problem) 
+
+![Relation_Relation](images/relation_extraction.png) 
+
+
+
+
+
+## Dataset & Benchmark
+
+### GLUE (General Language Understanding Evaluation)
+GLUE also has Chinese Version 
+
+
+Corpus of Linguistic Acceptability (CoLA)
+•Stanford Sentiment Treebank (SST-2)
+•Microsoft Research Paraphrase Corpus (MRPC)
+•QuoraQuestion Pairs (QQP)
+•Semantic Textual Similarity Benchmark (STS-B)
+•Multi-Genre Natural Language Inference (MNLI)
+•Question-answering NLI (QNLI)
+•Recognizing Textual Entailment (RTE)
+•WinogradNLI (WNLI)
+
+
+
+### Super GLUE
+
+
+### DecaNLP 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

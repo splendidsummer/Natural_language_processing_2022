@@ -209,7 +209,7 @@ class _ElmoCharacterEncoder(torch.nn.Module):
 
         # the character id embedding
         max_chars_per_token = self._options["char_cnn"]["max_characters_per_token"]
-        # (batch_size * sequence_length, max_chars_per_token, embed_dim)
+        # output_dim = (batch_size * sequence_length, max_chars_per_token, embed_dim)
         character_embedding = torch.nn.functional.embedding(
             character_ids_with_bos_eos.view(-1, max_chars_per_token), self._char_embedding_weights
         )
@@ -342,7 +342,6 @@ class _ElmoCharacterEncoder(torch.nn.Module):
             bias = fin["CNN_proj"]["b_proj"][...]
             self._projection.weight.data.copy_(torch.FloatTensor(numpy.transpose(weight)))
             self._projection.bias.data.copy_(torch.FloatTensor(bias))
-
             self._projection.weight.requires_grad = self.requires_grad
             self._projection.bias.requires_grad = self.requires_grad
 
@@ -757,7 +756,7 @@ class Elmo(torch.nn.Module, FromParams):
                 raise ConfigurationError("Don't provide options_file or weight_file with module")
             self._elmo_lstm = module
         else:
-            self._elmo_lstm = _ElmoBiLm(  # type: ignore
+            self._elmo_lstm = _ElmoBiLm(  # This model including char_cnn & BiLSTM
                 options_file,
                 weight_file,
                 requires_grad=requires_grad,
