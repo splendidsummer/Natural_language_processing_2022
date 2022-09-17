@@ -120,42 +120,103 @@ State-of-the-art in most NLP tasks are achieved by Transformer and Attention-bas
 
 
 #### Transformers Architecture 
+full view of Encoder-Decoder architecture:  
+![Multi-head Self-Attention](images/transformers.png) 
+
 
 ##### Encoder 
-![Multi-head Self-Attention](images/transformers.png) 
-1. Multi-head Self-Attention
-   Multi-heads not single heads: 
+1. **Positional Encoding** 
+2. **Multi-head Self-Attention**
    $$A_h = Softmax(\alpha Q_h K_h^T) V_h$$
    Remark: why multi-heads 
    ![why_multi_head](images/why_multi_head.png) 
-  
-2. 
+3. **Scaled Dot Product**
+
+4. **Feed Forward Layer**
+   **Problem:** Since there are no element wise non linearities, self
+attention is simply performing a re averaging of the value vectors. 
+**Easy fix**: Apply a feedforward layer to the output of attention,
+providing non linear activation (and additional expressive power).
+$$m_i = MLP(output_i) = W_2 * ReLU(W_1 * output_i + b_1) + b_2$$
+
+5. **Residual Connection**: residual connections are thought to make the loss landscape considerably smoother; Gradient can backpropagate through residual connections. 
+   $X^{(i)} = X^{(i-1)} + Layer(X^{(i-1)}) $
+   ![residual_loss](images/residual_loss.png)
+
+6. **Layer Normalization** 
+   Its success may be due to its normalizing gradients. [Xu et al., 2019](https://arxiv.org/abs/1911.07013) 
+   **Problem:** Difficult to train the parameters of a given layer because its input from the layer beneath keeps shifting.
+   **Solution:** Reduce uninformative variation by normalizing to zero mean and standard deviation of one within each layer
+   
+   $$\text{Mean}: \mu = \frac{1}{H} \sum_{i=1}^H a_i^l  \quad Std: \sigma^l = \sqrt{\frac{1}{H} \sum_{i=1}^H (a_i^l - \mu^l)^2}$$
+
+   $$x^{l^\prime} = \frac{x^l - \mu^l}{\sigma^l + \epsilon}$$ 
 
 
 ##### Decoder 
+***TO BE CONTINUE***
+![decoder_arch](images/decoder_architect.png)
 
 We us **Masked Multi Head Self Attention** to keep the decoder from cheating. (Masking the future in self attention). To enable parallelization, we mask out attention to future words by setting attention scores to $-\infty$. 
+1.  Masked Multi Head Self Attention 
+2.  Encoder-Decoder Attention 
+3.  A Feed forward layer (with residual connections and layer norm)
+4.  A final linear layer to project the embeddings into a much longer vector of length vocab size (logits)
+5.  Add a final softmax to generate a probability distribution of possible next words!
 
 
 #### Drawbacks of transformers
 
 * Quadratic compute in self attention (today): Computing all pairs of interactions means our computation grows quadratically with the sequence length!
 
-* Position representations: Are simple absolute indices the best we can do to represent position? : 1. Improvement1: [Relative linear position attention](https://arxiv.org/abs/1803.02155); 2.Improvement2: [Dependency syntax based position.](https://arxiv.org/pdf/1909.00383.pdf)\
+* Position representations: Are simple absolute indices the best we can do to represent position? : 1. Improvement1: [Relative linear position attention](https://arxiv.org/abs/1803.02155); 2.Improvement2: [Dependency syntax based position.](https://arxiv.org/pdf/1909.00383.pdf)
 
 #### Improvement of Transformers 
 1. Can we build models like Transformers without paying the $𝑂(𝑇^2)$ all pairs self attention cost?: [**Linformer**]() 
+
+#### Do Transformer Modifications Transfer?
 
 ## Pretrained Model (with hugging-face implementation)
 
 ### Bert 
 
 Only **Encoder** architecture of Transformers. 
+Contextual word embedding 
+
+Small BERT including **Distill BERT**, **Tiny BERT**, **Mobile BERT**, **Q8BERT**, **ALBERT**. 
+Network Compression: Network Pruning, Knowledge Distillation, Parameter Quanitization, Architecture Design. 
+
+**Network Architecture**: mainly designed for processing longer sequence, for instance: **XLNET**(Transformer-XL),  
 
 #### Subword Tokenizer 
 
 #### Build
 
+### XLNET
+读取跨segment的tokens 
+
+### Roberta 
+
+
+### Albert 
+
+
+### Distill Bert
+
+
+### Spatial Bert
+
+
+### Big Bird
+
+
+### ENIRE 
+
+
+### Megatron 
+### NLP Turning 
+
+### Efficient Self-Attention
 
 
 ## QA(Question Answering) 
