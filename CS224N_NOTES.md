@@ -9,10 +9,12 @@
 # UPC Course 
 ## Lecture 2 NERC
 
-# Lecture 7 Seq2Seq & Neural Machine Translation
+## Lecture 7 Seq2Seq & Neural Machine Translat
 
 **Sequence-to-Sequence model** is a **Conditional Language Model**
 **Advantage:**
+
+
 * Better performance: more fluent; better use context; better use of phrase similarities. 
 * A single neural network to be optimized end-to-end
 * Require much less human engineering effort
@@ -29,16 +31,64 @@
 
 ## Neural Machine Translation 
 
-### Perplexity 
+###  Attention Mechanism 
+This part mainly refer to Deep learning specialization Course 5 in Coursera. 
+![attention](images/attention_mech.png)
+$$\alpha^{t, t^{\prime}} = \text{amount of 'attention' $y^{<t>}$ should pay to $a^{<t^{\prime}>}$}$$
+$$c^{<1>} = \sum_{t^{\prime}} \alpha^{<1, t^\prime>} a^{<t\prime>} \quad c^{<2>} = \sum_{t^{\prime}} \alpha^{<2, t^\prime>} a^{<t\prime>}$$
+$$\vec{a}^{<t\prime>} = (\overrightarrow{a}^{<t\prime>}, \overleftarrow{a}^{<t\prime>})$$
 
-In general, perplexity is a measurement of how well a probability model predicts a sample. In the context of Natural Language Processing, perplexity is one way to evaluate language models.
-A language model is a probability distribution over sentences: it’s both able to generate plausible human-written sentences (if it’s a good language model) and to evaluate the goodness of already written sentences. Presented with a well-written document, a good language model should be able to give it a higher probability than a badly written document, i.e. it should not be “perplexed” when presented with a well-written document. 
+#### How to compute $\alpha^{t}$
+$$\alpha^{<t,t^{\prime}>} = \frac{exp(e^{<t, t^{\prime}>})}{\sum_{t^\prime=1}^{T_x} exp(e^{<t, t^\prime>})}$$ 
 
-$$perplexity(S) = p(w_1, w_2, w_3, ..., w_m) ^ {-\frac{1}{m}}$$
+#### How to compute $e^{<t, t\prime>}$
+Basically in the course it introduce an small neural network to generate scalar $e^{<t, t^\prime>}$, but not in detail. 
+![compute_e](images/compute_e.png)
 
-### ROUGE Metrics
-ROUGE, or Recall-Oriented Understudy for Gisting Evaluation,[1] is a set of metrics and a software package used for evaluating automatic summarization and machine translation software in natural language processing. The metrics compare an automatically produced summary or translation against a reference or a set of references (human-produced) summary or translation.
+```
+# Implementation of Bleu Score 
+def 
 
+```
+
+### Evaluation 
+
+#### BLEU Score
+Example to calculate BELU score:
+**Ref1:** The cat is on the mat. 
+**Ref2:** There is a cat on the mat. 
+
+**MT Output:**  The cat the cat on the mat.
+
+Firstly we get the bigram of the MT output: the cat, cat the, the cat, cat on, on the, the mat; the we count 
+
+| Item     | Count  | Count Clip | 
+|----------|--------|------------|
+| the cat  | 2      |  1         |
+| cat the  | 1      |  0         |  
+| cat on   | 1      |  1         |
+| on the   | 1      |  1         |
+| the mat  | 1      |  1         |
+
+1. BLEU Score of unigram
+   $$P_1 = \frac{\sum_{unigram \in \hat{y}} Count_{clip}(Unigram)}{{\sum_{unigram \in \hat{y}} Count(Unigram)}}$$
+2. BLEU Score of ngram 
+    $$P_n = \frac{\sum_{gram \in \hat{y}} Count_{clip}(ngram)}{{\sum_{ngram \in \hat{y}} Count(ngram)}}$$ 
+3. Combined BLEU Score: **Instead using only ngram(n equals to a certain value)**, it is more realistic to use combined metric:
+   $$C ombined_{BLEU} = BP * exp(\frac{1}{4} \sum_{n=1}^1 P_n)$$  where BP is defined in the following as a penality fort too short translation (more specifically )
+$$
+BP = 
+\begin{cases}
+1 ,    \quad \text{if MT-output-length > reference-output-length} \\ 
+exp(1- MT-output-length / reference-output-length),  \text{if $n$ is odd}
+\end{cases}
+$$
+
+```
+# Implementation of Bleu Score 
+def 
+
+```
 
 ## Training a Neural Machine Translation System 
 End-to-end encoder-decoder architecture 
@@ -86,10 +136,6 @@ Many difficulties remains:
 * Morphological agreement errors 
 * NMT bais (gender bais)
 * Uninterpretable 
-
-### Attention in NMT (from Coursera DL by Andrew Ng)
-
-//
 
 ### Lecture 9 Self Attention and Transformers
 
@@ -163,6 +209,7 @@ We us **Masked Multi Head Self Attention** to keep the decoder from cheating. (M
 3.  A Feed forward layer (with residual connections and layer norm)
 4.  A final linear layer to project the embeddings into a much longer vector of length vocab size (logits)
 5.  Add a final softmax to generate a probability distribution of possible next words!
+**Cross Attention**
 
 
 #### Drawbacks of transformers
@@ -178,15 +225,31 @@ We us **Masked Multi Head Self Attention** to keep the decoder from cheating. (M
 
 ## Pretrained Model (with hugging-face implementation)
 
-### Bert 
-
-Only **Encoder** architecture of Transformers. 
+### Overview 
 Contextual word embedding 
 
 Small BERT including **Distill BERT**, **Tiny BERT**, **Mobile BERT**, **Q8BERT**, **ALBERT**. 
 Network Compression: Network Pruning, Knowledge Distillation, Parameter Quanitization, Architecture Design. 
 
 **Network Architecture**: mainly designed for processing longer sequence, for instance: **XLNET**(Transformer-XL),  
+
+### How to Fine-tune 
+refer to [DLHLP 2020] BERT and its family - Introduction and Fine-tune from Hongyi Lee.  
+
+
+### How to Pretrain 
+Refer to  [DLHLP 2020] BERT and its family - ELMo, BERT, GPT, XLNet, MASS, BART, UniLM, ELECTRA, and more
+
+
+
+### Bert 
+
+
+
+
+
+Only **Encoder** architecture of Transformers. 
+
 
 #### Subword Tokenizer 
 
@@ -198,10 +261,13 @@ Network Compression: Network Pruning, Knowledge Distillation, Parameter Quanitiz
 ### Roberta 
 
 
-### Albert 
+### Albert & Distill Bert
 
+### MASS 
 
-### Distill Bert
+### BART 
+
+### ELECTRA 
 
 
 ### Spatial Bert
@@ -239,6 +305,20 @@ NLU Task:
 ## NLG (Natural Language Generation)  
 
 ![task-oriented](images/task-oriented.png)
+
+
+### Evaluation 
+#### Perplexity 
+
+In general, perplexity is a measurement of how well a probability model predicts a sample. In the context of Natural Language Processing, perplexity is one way to evaluate language models.
+A language model is a probability distribution over sentences: it’s both able to generate plausible human-written sentences (if it’s a good language model) and to evaluate the goodness of already written sentences. Presented with a well-written document, a good language model should be able to give it a higher probability than a badly written document, i.e. it should not be “perplexed” when presented with a well-written document. 
+
+$$perplexity(S) = p(w_1, w_2, w_3, ..., w_m) ^ {-\frac{1}{m}}$$
+
+### ROUGE Metrics
+ROUGE, or Recall-Oriented Understudy for Gisting Evaluation,[1] is a set of metrics and a software package used for evaluating automatic summarization and machine translation software in natural language processing. The metrics compare an automatically produced summary or translation against a reference or a set of references (human-produced) summary or translation.
+
+
 
 ## Knowledge Graph 
 This task can be oversimplified in the following way: 
