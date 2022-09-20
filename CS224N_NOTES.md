@@ -63,12 +63,12 @@ Example to calculate BELU score:
 Firstly we get the bigram of the MT output: the cat, cat the, the cat, cat on, on the, the mat; the we count 
 
 | Item     | Count  | Count Clip | 
-|----------|--------|------------|
-| the cat  | 2      |  1         |
-| cat the  | 1      |  0         |  
-| cat on   | 1      |  1         |
-| on the   | 1      |  1         |
-| the mat  | 1      |  1         |
+|----------|--------|----------|
+| the cat  | 2      |  1       |
+| cat the  | 1      |  0       |  
+| cat on   | 1      |  1       |
+| on the   | 1      |  1       |
+| the mat  | 1      |  1       |
 
 1. BLEU Score of unigram
    $$P_1 = \frac{\sum_{unigram \in \hat{y}} Count_{clip}(Unigram)}{{\sum_{unigram \in \hat{y}} Count(Unigram)}}$$
@@ -76,6 +76,7 @@ Firstly we get the bigram of the MT output: the cat, cat the, the cat, cat on, o
     $$P_n = \frac{\sum_{gram \in \hat{y}} Count_{clip}(ngram)}{{\sum_{ngram \in \hat{y}} Count(ngram)}}$$ 
 3. Combined BLEU Score: **Instead using only ngram(n equals to a certain value)**, it is more realistic to use combined metric:
    $$C ombined_{BLEU} = BP * exp(\frac{1}{4} \sum_{n=1}^1 P_n)$$  where BP is defined in the following as a penality fort too short translation (more specifically )
+
 $$
 BP = 
 \begin{cases}
@@ -83,12 +84,8 @@ BP =
 exp(1- MT-output-length / reference-output-length),  \text{if $n$ is odd}
 \end{cases}
 $$
-
-```
-# Implementation of Bleu Score 
-def 
-
-```
+#### BLEU Score Implementation
+Refer to 'codes/bleu_score.py' 
 
 ## Training a Neural Machine Translation System 
 End-to-end encoder-decoder architecture 
