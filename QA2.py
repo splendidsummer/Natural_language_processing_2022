@@ -80,7 +80,7 @@ class squadDataset(Dataset):
         return {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
 
     def __len__(self):
-        return self.encodings.input_ids
+        return len(self.encodings.input_ids)
 
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -151,7 +151,7 @@ def test(data_loader):
             # model inputs is different from training
             outputs = model(input_ids, attention_mask=attention_mask)
 
-            # start_logits, end_logits
+            # start_logits, end_logits in outputs -- from hugging face API 
             start_pred = torch.argmax(outputs['start_logits'], dim=1)
             end_pred = torch.argmax(outputs['end_logits'], dim=1)
 
@@ -168,7 +168,8 @@ def test(data_loader):
 
 if __name__ == '__main__':
     train(epoches=2, data_loader=train_loader)
-    print(111)
+    test(data_loader=dev_loader)
+
 
 
 
