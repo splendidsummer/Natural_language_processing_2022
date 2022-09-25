@@ -6,6 +6,25 @@
 ## NLP Task Review
 ![nlp_tasks](images/nlp_tasks.png)
 
+$$
+Input = 
+\begin{cases}
+One sentence,   \\ 
+Multiple sentences 
+\end{cases}
+$$
+
+$$
+Output = 
+\begin{cases}
+One Class  \\ 
+Class for each token \\ 
+Copy from input  \\ 
+General sequence 
+\end{cases}
+$$
+
+
 # UPC Course 
 ## Lecture 2 NERC
 
@@ -225,55 +244,58 @@ We us **Masked Multi Head Self Attention** to keep the decoder from cheating. (M
 ### Overview 
 Contextual word embedding 
 
-Small BERT including **Distill BERT**, **Tiny BERT**, **Mobile BERT**, **Q8BERT**, **ALBERT**. 
-Network Compression: Network Pruning, Knowledge Distillation, Parameter Quanitization, Architecture Design. 
+Small BERT including **Distill BERT**, **Tiny BERT**, **Mobile BERT**, **Q8BERT**, **ALBERT**... 
 
-**Network Architecture**: mainly designed for processing longer sequence, for instance: **XLNET**(Transformer-XL),  
+**Network Architecture**: mainly designed for processing longer sequence, for instance: **XLNET**(Transformer-XL), 
+
+**Two steps of Using huge models:** Pretrain -> finetune(Task Specific data with annotations) 
+
+### How to Pretrain 
+**Refer to  Hongyi Lee's [DLHLP 2020] BERT and its family lecture - ELMo, BERT, GPT, XLNet, MASS, BART, UniLM, ELECTRA, and more.**
+Bert is pretrained by masking input, and there are multiple ways to do masking input pretrain:
+**1.Original Bert mask which is subword masking** according to Bert tokenization method. fixed mask?? 
+**1.Dynamic Masking**: refer to [Roberta](https://arxiv.org/abs/1907.11692)  
+**1.Mask whole words** refer to [Pre-Training with Whole Word Masking for Chinese BERT](https://arxiv.org/abs/1906.08101?amp=1)
+**1.Phrase-level & Entity-level masking** refer to [ERNIE: Enhanced Language Representation with Informative Entities](https://arxiv.org/abs/1905.07129) 
+**1.Span Masking** refer to [SpanBert](https://arxiv.org/abs/1907.10529)
+**1.** 
 
 ### How to Fine-tune 
 refer to [DLHLP 2020] BERT and its family - Introduction and Fine-tune from Hongyi Lee.  
+**Dealing with inputs**: 
+1. **one sentence input** is quite simple; 
+1. **Multiple sentences input**:  Seperated by **[SEP]** token. 
+1. Bert model input starts with a **[CLS]** token. 
+**If we are ouput one element** for instance classification problem, probably we will add a **[CLS]** token at the beginning of Bert input. 
 
 
-### How to Pretrain 
-Refer to  [DLHLP 2020] BERT and its family - ELMo, BERT, GPT, XLNet, MASS, BART, UniLM, ELECTRA, and more
+### Bert and its variants
+#### How to compress models
+**Network Compression** :  
+* Network Pruning 
+* Knowledge Distillation 
+* Parameter Quanitization 
+* Architecture Design 
 
+#### Network Architecture
+* **XLNet**
+* **Reformer**
+* **Longformer**
+* **Roberta**
+* **Albert & Distill Bert**
+* **MASS**
+* **Bart**
+* **ELECTRA**
+* **ENIRE**
+* **Big Bird**
 
-
-### Bert 
-
-
-
-
+**There are actually so many ways to make a more efficient Bert, for this one can refer to [a very interesting survey from Google](https://arxiv.org/abs/2009.06732).**
 
 Only **Encoder** architecture of Transformers. 
 
 
 #### Subword Tokenizer 
 
-#### Build
-
-### XLNET
-读取跨segment的tokens 
-
-### Roberta 
-
-
-### Albert & Distill Bert
-
-### MASS 
-
-### BART 
-
-### ELECTRA 
-
-
-### Spatial Bert
-
-
-### Big Bird
-
-
-### ENIRE 
 
 
 ### Megatron 
@@ -350,16 +372,6 @@ Corpus of Linguistic Acceptability (CoLA)
 
 
 ### DecaNLP 
-
-
-
-
-
-
-
-
-
-
 
 
 
