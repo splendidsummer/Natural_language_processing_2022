@@ -215,7 +215,7 @@ $$m_i = MLP(output_i) = W_2 * ReLU(W_1 * output_i + b_1) + b_2$$
    $$x^{l^\prime} = \frac{x^l - \mu^l}{\sigma^l + \epsilon}$$ 
 
 
-##### Decoder 
+##### Decoder  -- 这里真的要补充
 ***TO BE CONTINUE***
 ![decoder_arch](images/decoder_architect.png)
 
@@ -227,6 +227,10 @@ We us **Masked Multi Head Self Attention** to keep the decoder from cheating. (M
 5.  Add a final softmax to generate a probability distribution of possible next words!
 **Cross Attention**
 
+#### Transformer Model Usage 
+* **Encoder-Decoder**  The full Transformer architecture as introduced in Sec. 2.1 is used. This is typically used in sequence-to-sequence modeling (e.g., neural machine translation).
+* **Encoder only**  Only the encoder is used and the outputs of the encoder are utilized as a representation for the input sequence. This is usually used for classification or sequence labeling problems.
+* **Decoder only** Only the decoder is used, where the encoder-decoder cross-attention module is also removed. This is typically used for sequence generation, such as language modeling.
 
 #### Drawbacks of transformers
 
@@ -260,10 +264,12 @@ Bert is pretrained by masking input, and there are multiple ways to do masking i
 **1.Span Masking** refer to [SpanBert](https://arxiv.org/abs/1907.10529)
 **1.** 
 
+Bert can not talk? Which means Bert is not good at generation task. 
+
 ### How to Fine-tune 
-refer to [DLHLP 2020] BERT and its family - Introduction and Fine-tune from Hongyi Lee.  
+Refer to [DLHLP 2020] BERT and its family - Introduction and Fine-tune from Hongyi Lee.  
 **Dealing with inputs**: 
-1. **one sentence input** is quite simple; 
+1. **One sentence input** is quite simple; 
 1. **Multiple sentences input**:  Seperated by **[SEP]** token. 
 1. Bert model input starts with a **[CLS]** token. 
 **If we are ouput one element** for instance classification problem, probably we will add a **[CLS]** token at the beginning of Bert input. 
@@ -279,15 +285,19 @@ refer to [DLHLP 2020] BERT and its family - Introduction and Fine-tune from Hong
 
 #### Network Architecture
 * **XLNet**
-* **Reformer**
-* **Longformer**
+* Transfomer-XL 
 * **Roberta**
 * **Albert & Distill Bert**
+* **GPT**
 * **MASS**
 * **Bart**
 * **ELECTRA**
 * **ENIRE**
+* **T5**
+* **Reformer**
+* **Linformer**
 * **Big Bird**
+
 
 **There are actually so many ways to make a more efficient Bert, for this one can refer to [a very interesting survey from Google](https://arxiv.org/abs/2009.06732).**
 
