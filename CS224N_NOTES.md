@@ -526,12 +526,48 @@ print(res['elmo_representations'][1].shape)  # [3, 9, 1024]
 * **torch.**
 
 
+## Dataset Summarization 
+
+### **[GLUE (General Language Understanding Evaluation)](://gluebenchmark.com/)** 
+  The General Language Understanding Evaluation (GLUE) benchmark is a collection of resources for training, evaluating, and analyzing natural language understanding systems. GLUE consists of:
+A benchmark of nine sentence- or sentence-pair language understanding tasks built on established existing datasets and selected to cover a diverse range of dataset sizes, text genres, and degrees of difficulty,
+A diagnostic dataset designed to evaluate and analyze model performance with respect to a wide range of linguistic phenomena found in natural language, and
+A public leaderboard for tracking performance on the benchmark and a dashboard for visualizing the performance of models on the diagnostic set.
+The format of the GLUE benchmark is model-agnostic, so any system capable of processing sentence and sentence pairs and producing corresponding predictions is eligible to participate. The benchmark tasks are selected so as to favor models that share information across tasks using parameter sharing or other transfer learning techniques. The ultimate goal of GLUE is to drive research in the development of general and robust natural language understanding systems. 
+
+  * Corpus of Linguistic Acceptability (CoLA)
+  * Stanford Sentiment Treebank (SST-2)
+  * Microsoft Research Paraphrase Corpus (MRPC)
+  * QuoraQuestion Pairs (QQP)
+  * Semantic Textual Similarity Benchmark (STS-B)
+  * Multi-Genre Natural Language Inference (MNLI)
+  * Question-answering NLI (QNLI)
+  * Recognizing Textual Entailment (RTE)
+  * WinogradNLI (WNLI) 
+
+* [GLUE Chinese version](https://www.cluebenchmarks.com/)
+![chinese_bert](images/chinese-bert.png)
 
 
+### [Super GLUE](https://super.gluebenchmark.com/) 
+The GLUE benchmark, introduced one year ago, offered a single-number metric that summarizes progress on a diverse set of such tasks, but performance on the benchmark has recently come close to the level of non-expert humans, suggesting limited headroom for further research.
+
+We take into account the lessons learnt from original GLUE benchmark and present SuperGLUE, a new benchmark styled after GLUE with a new set of more difficult language understanding tasks, improved resources, and a new public leaderboard. 
 
 
+### [DecaNLP](https://decanlp.com/) 
+
+其中bert的一些变体性能在bert基础上进一步提升，在多个nlp任务上取得了非常好的泛化结果，接下来我们将涉及近些年来受到广泛认可的bert模型。
 
 
+### Question Answering Dataset 
+
+#### extractive question answering benchmarks
+NewsQA
+TriviaQA
+SearchQA
+HotpotQA
+and Natural Questions 
 
 
 
