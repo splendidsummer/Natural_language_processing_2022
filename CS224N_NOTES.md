@@ -560,14 +560,20 @@ We take into account the lessons learnt from original GLUE benchmark and present
 其中bert的一些变体性能在bert基础上进一步提升，在多个nlp任务上取得了非常好的泛化结果，接下来我们将涉及近些年来受到广泛认可的bert模型。
 
 
+### RACE 
+
+
 ### Question Answering Dataset 
 
 #### extractive question answering benchmarks
-NewsQA
-TriviaQA
-SearchQA
-HotpotQA
-and Natural Questions 
+* **NewsQA**
+* **TriviaQA**
+* **SearchQA** 
+* **HotpotQA**
+* **Natural Questions** 
 
+## Shared Task 
+
+### CoNLL-2012 
 
 
